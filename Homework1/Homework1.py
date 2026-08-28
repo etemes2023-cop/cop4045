@@ -1,4 +1,4 @@
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 import math
 
 class QuadraticFormula:
@@ -6,22 +6,20 @@ class QuadraticFormula:
         pass
 
     def main(self):
-        a = input("Enter a: ")
-        b = input("Enter b: ")
-        c = input("Enter c: ")
+        a = float(input("Enter a: "))
+        b = float(input("Enter b: "))
+        c = float(input("Enter c: "))
         self.findQuadraticSolutions(a, b, c)
+        self.graphEquation(a, b, c)
 
     def findQuadraticSolutions(self, a, b, c):
         while True:
-            a = float(a)
             if a == "":
                 break
             else:
-                b = float(b)
                 if b == "":
                     break
                 else:
-                    c = float(c)
                     if c == "":
                         break
                     else:
@@ -39,11 +37,20 @@ class QuadraticFormula:
                             print(f"\nTwo real solutions: x1={x1}, x2={x2}")
                             break
 
-    # def graphEquation(self, a, b, c):
-    #     xmin = input("Enter minimum x: ")
-    #     xmax = input("Enter maximum x: ")
-    #     y = a*x**2 + b*x + c
-    #     graph = matplotlib.pyplot.plot(x,y)
+    def graphEquation(self, a, b, c):
+        xmin = float(input("Enter minimum x: "))
+        xmax = float(input("Enter maximum x: "))
+        x = []
+        y = []
+        interval = (xmax-xmin) / 149
+        for i in range(150):
+            x_i = xmin + i * interval
+            y_i = a*x_i**2 + b*x_i + c
+            x.append(x_i)
+            y.append(y_i)
+        plt.plot(x,y)
+        plt.show()
+
 solution = QuadraticFormula()
 solution.main()
 print(solution)
