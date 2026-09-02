@@ -33,7 +33,7 @@ class CreateFunctionGraphs:
         for i in range(0, ns-1):
             print(f"{xs[i]:>10.2f} {ys[i]:>10.2f}")
 
-        plt.title("Function Graph")
+        plt.title(f"{fun_str}")
         plt.xlabel("X")
         plt.ylabel("Y")
         plt.plot(xs, ys)
