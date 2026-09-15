@@ -41,13 +41,21 @@ class Comprehension:
                 if sorted(word.lower()) == sorted(list.lower()):
                     anagrams.append((word, list))
         return anagrams
+
+    #Part E
+    def find_string_lengths(self, string_list):
+        string_lengths = {}
+        for string in string_list:
+            string_lengths[string] = len(string)
+        return string_lengths
     
     def main(self):
-        lst1 = ["Spam", "Trams", "Elbows", "Tops", "Astral"]
-        lst2 = ["Bowels", "Sample", "Altars", "Stop", "Course", "Smart"]
+        s = ["One", "Two", "Three"]
+        #lst1 = ["Spam", "Trams", "Elbows", "Tops", "Astral"]
+        #lst2 = ["Bowels", "Sample", "Altars", "Stop", "Course", "Smart"]
         #names = ['Christopher Ashton Kutcher', 'Elizabeth Stamatina Fey']
         #strings = ["One", "SEVEN", "Three", "Two", "Ten"]
-        print(self.find_anagrams(lst1, lst2))
+        print(self.find_string_lengths(s))
 
 solution = Comprehension()
 solution.main()
