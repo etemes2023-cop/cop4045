@@ -32,11 +32,22 @@ class Comprehension:
             name_parts[1] = name_parts[1][0] + "."
             valid.append(" ".join(name_parts))
         return valid
+
+    #Part D
+    def find_anagrams(self, lst1, lst2):
+        anagrams = []
+        for word in lst1:
+            for list in lst2:
+                if sorted(word.lower()) == sorted(list.lower()):
+                    anagrams.append((word, list))
+        return anagrams
     
     def main(self):
-        names = ['Christopher Ashton Kutcher', 'Elizabeth Stamatina Fey']
+        lst1 = ["Spam", "Trams", "Elbows", "Tops", "Astral"]
+        lst2 = ["Bowels", "Sample", "Altars", "Stop", "Course", "Smart"]
+        #names = ['Christopher Ashton Kutcher', 'Elizabeth Stamatina Fey']
         #strings = ["One", "SEVEN", "Three", "Two", "Ten"]
-        print(self.revised_names(names))
+        print(self.find_anagrams(lst1, lst2))
 
 solution = Comprehension()
 solution.main()
