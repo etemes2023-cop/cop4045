@@ -14,9 +14,17 @@ class Comprehension:
                         if s == t:
                             valid.append(numbers)
         return valid
+
+    def string_valid(self, strings):
+        valid = []
+        for string in strings:
+            if len(string) < 5:
+                valid.append((string.lower(), len(string)))
+        return valid
     
     def main(self):
-        print(self.number_com())
+        strings = ["One", "SEVEN", "Three", "Two", "Ten"]
+        print(self.string_valid(strings))
 
 solution = Comprehension()
 solution.main()
