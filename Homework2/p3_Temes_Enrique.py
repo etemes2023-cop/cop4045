@@ -1,4 +1,5 @@
 import csv
+import ast
 class SocialNetwork:
     def __init__(self):
         pass
@@ -47,7 +48,6 @@ class SocialNetwork:
     def get_friend(self, sn: dict[str, tuple[str, list[str]]], user1: str, distance: int)-> list[str]:
         """Gets every unique friend for one user in the social network through nested loops."""
         try:
-            friends = []
             current = sn[user1][1].copy()
             friends = current.copy()
             for i in range(1, distance):
@@ -78,7 +78,27 @@ class SocialNetwork:
         except FileNotFoundError:
             print(f"File {filename} does not exist.")
             raise
- 
+
+    #Part E
+    def load_network(self, filename: str) -> dict[str, tuple[str, list[str]]]:
+        """Reads csv file, skips header, and converts each row back into a dictionary to be returned and printed."""
+        try:
+            sn = {}
+            with open(filename, "r", newline="") as file:
+                reader = csv.reader(file)
+                next(reader)
+                for row in reader:
+                    username = row[0]
+                    fullname = row[1]
+                    friends = ast.literal_eval(row[2])
+                    sn[username] = (fullname, friends)
+                return sn
+                    
+        except FileNotFoundError:
+            print(f"File {filename} does not exist.")
+            raise
+
+    #Part F
     def main(self):
         sn = {}
         user_added = True
@@ -111,6 +131,8 @@ class SocialNetwork:
 
         filename = input("Enter filename to save social network: ")
         self.save_network(filename, sn)
+        sn = self.load_network(filename)
+        print(sn)
 
 solution = SocialNetwork()
 solution.main()
