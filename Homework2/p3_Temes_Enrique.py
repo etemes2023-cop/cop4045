@@ -1,7 +1,9 @@
+import csv
 class SocialNetwork:
     def __init__(self):
         pass
 
+    #Part A
     def add_user(self, sn: dict[str, tuple[str, list[str]]], username: str, fullname: str) -> bool:
         """Checks if user is already in social network. If so, return False. Otherwise, add that user and return True."""
         try:
@@ -17,6 +19,7 @@ class SocialNetwork:
             print("Invalid username or full name or dictionary type.")
             raise
 
+    #Part B
     def add_friend(self, sn: dict[str, tuple[str, list[str]]], user1: str, user2: str) -> bool:
         """Checks if both users exist in dictionary. If so, they are added to each other's network and true is returned.
         Otherwise, return false."""
@@ -40,15 +43,13 @@ class SocialNetwork:
             print("Invalid username or full name or dictionary type.")
             raise    
 
+    #Part C
     def get_friend(self, sn: dict[str, tuple[str, list[str]]], user1: str, distance: int)-> list[str]:
         """Gets every unique friend for one user in the social network through nested loops."""
         try:
             friends = []
             current = sn[user1][1].copy()
             friends = current.copy()
-            print(f"user1: {user1}")
-            print(f"current: {current}")
-            print(f"friends: {friends}")
             for i in range(1, distance):
                 next_link = []
                 for friend in current:
@@ -63,7 +64,20 @@ class SocialNetwork:
         
         except TypeError:
             print("Invalid username or full name or dictionary type.")
-            raise   
+            raise  
+
+    #Part D
+    def save_network(self, filename: str, sn: dict[str, tuple[str, list[str]]]) -> None:
+        """Loops through the social network and adds each user's username, fullname, and friends list to a csv file."""
+        try:
+            with open(filename, "w", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow(["username", "fullname", "friends"])
+                for user in sn:
+                    writer.writerow([user, sn[user][0], sn[user][1]])
+        except FileNotFoundError:
+            print(f"File {filename} does not exist.")
+            raise
  
     def main(self):
         sn = {}
@@ -94,6 +108,9 @@ class SocialNetwork:
         user_in = input("Enter username to find friends for: ")
         distance = int(input(f"Enter link distance for {user_in}: "))
         print(self.get_friend(sn, user_in, distance))
+
+        filename = input("Enter filename to save social network: ")
+        self.save_network(filename, sn)
 
 solution = SocialNetwork()
 solution.main()
