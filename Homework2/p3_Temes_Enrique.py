@@ -98,17 +98,53 @@ class SocialNetwork:
             print(f"File {filename} does not exist.")
             raise
 
+    #Part G(Extra Credit)
+    # testif module
+    def testif(self, b: bool, testname: str, msgOK="", msgFailed="") -> bool:
+        """Function used for testing.
+        param b: boolean, normally a tested condition: true if test passed, false
+        otherwise
+        param testname: the test name
+        param msgOK: string to be printed if param b==True ( test condition true)
+        param msgFailed: string to be printed if param b==False
+        returns b
+        """
+        if b:
+            print("Success: "+ testname + "; " + msgOK)
+        else:
+            print("Failed: "+ testname + "; " + msgFailed)
+        return b
+
+    def test(self):
+        """Test function to test functions add_user, add_friend, get_friends, save_network, and load_network."""
+        sn = {}
+        self.testif(self.add_user(sn, "alice", "Alice Smith")==True, "add_user new user", "User added.", "User not added.")
+        self.testif(self.add_user(sn, "alice", "Alice Smith")==False, "add_user duplicate user", "Duplicate not added.", "Duplicate accepted.")
+        self.add_user(sn, "bob", "Bob Jones")
+        self.testif(self.add_friend(sn, "alice", "bob")==True, "add_friend users exist", "Added friendship.", "Friendship not added.")
+        self.testif("bob" in sn["alice"][1] and "alice" in sn["bob"][1], "add_friend friendship", "Mutual friendship.", "Not mutual.")
+        self.testif(self.add_friend(sn, "bob", "carol")==False, "add_friend nonexistent user", "User rejected.", "User added.")
+        self.add_user(sn, "carol", "Carol Weathers")
+        self.add_friend(sn, "bob", "carol")
+        self.testif(self.get_friend(sn, "alice", 1) == ["bob"], "get_friend at link distance 1", "Correct list.", "Incorrect list.")
+        self.testif(self.get_friend(sn, "alice", 2) == ["bob", "carol"], "get_friend at link distance 2", "Correct list.", "Incorrect list.")
+        filename = "test_social_network.csv"
+        self.save_network(filename, sn)
+        loaded = self.load_network(filename)
+        self.testif(loaded == sn, "save/load_network", "Network saved and loaded.", "Loaded network does not match.")
+
     #Part F
     def main(self):
         sn = {}
         user_added = True
         friend_added = True
+        print("Enrique Temes")
         while (user_added == True):
             keep_going = input("Do you want to add another user? ")
             if (keep_going.lower() == 'y'):
                 username = input("Enter username: ")
                 fullname = input("Enter full name: ")
-                print(self.add_user(sn, username, fullname))
+                self.add_user(sn, username, fullname)
             elif (keep_going.lower() == 'n'):
                 user_added = False
             else:
@@ -119,7 +155,7 @@ class SocialNetwork:
             if (keep_going.lower() == 'y'):
                 user1 = input("Enter first username: ")
                 user2 = input("Enter second username: ")
-                print(self.add_friend(sn, user1, user2))
+                self.add_friend(sn, user1, user2)
             elif (keep_going.lower() == 'n'):
                 friend_added = False
             else:
@@ -136,3 +172,4 @@ class SocialNetwork:
 
 solution = SocialNetwork()
 solution.main()
+solution.test()

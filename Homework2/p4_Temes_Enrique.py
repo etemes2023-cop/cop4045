@@ -70,7 +70,9 @@ class IMDB:
 
     #Part C       
     def main(self):
+        print("Enrique Temes")
         print(self.display_top_collaborations())
+        print("\n")
         print(self.display_top_actors())
 
 solution = IMDB()

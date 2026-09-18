@@ -67,6 +67,7 @@ class Comprehension:
         names = ['Christopher Ashton Kutcher', 'Elizabeth Stamatina Fey']
         strings = ["One", "SEVEN", "Three", "Two", "Ten"]
 
+        print("Enrique Temes")
         print(self.number_com())
         print(f"\n{self.string_valid(strings)}")
         print(f"\n{self.revised_names(names)}")
