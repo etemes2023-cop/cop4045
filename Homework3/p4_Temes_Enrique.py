@@ -33,7 +33,6 @@ class TextEditor:
             if occurrence == -1:
                 occurrences = content.count(search_str)
                 content = content.replace(search_str, replace_with)
-                return 1
             elif occurrence >= 0:
                 if occurrence < len(positions):
                     position = positions[occurrence]
@@ -53,5 +52,58 @@ class TextEditor:
         """Appends string to end of file and returns number of characters in appended file."""
         with open(filename, "a", encoding="utf-8") as app_file:
             return app_file.write(string)
-    
-                  
+
+    def testif(self, b: bool, testname: str, msgOK: str="", msgFailed: str="") -> bool:
+        """Function used for testing.
+        param b: boolean, normally a tested condition: true if test passed, false
+        otherwise
+        param testname: the test name
+        param msgOK: string to be printed if param b==True ( test condition true)
+        param msgFailed: string to be printed if param b==False
+        returns b
+        """
+        if b:
+            print("Success: "+ testname + "; " + msgOK)
+        else:
+            print("Failed: "+ testname + "; " + msgFailed)
+        return b  
+
+    def test_ed_find(self)->None:
+        """Test method for ed_find."""
+        test_file = "test_file.txt"
+        write = "Appends string to end of file and returns number of characters in appended file."
+        with open(test_file, "w", encoding="utf-8") as wrt_file:
+            wrt_file.write(write)
+        self.testif(self.ed_find(test_file, "end") == [3, 18, 69], "Find end", "Test passed.", "Test failed.")
+        self.testif(self.ed_find(test_file, "file") == [25, 75], "Find file", "Test passed.", "Test failed.")
+
+    def test_ed_replace(self)->None:
+        """Test method for ed_replace."""
+        test_file = "test_file.txt"
+        write = "Appends string to end of file and returns number of characters in appended file."
+        with open(test_file, "w", encoding="utf-8") as wrt_file:
+            wrt_file.write(write)
+        self.testif(self.ed_replace(test_file, "end", "start", -1) == 3, "Replace end", "Test passed.", "Test failed.")
+        self.testif(self.ed_replace(test_file, "file", "start", -1) == 2, "Replace file", "Test passed.", "Test failed.") 
+        try:
+            self.ed_replace(test_file, "file", "start", -2)   
+            self.testif(False, "ValueError", "Test passed.", "Test failed.")
+        except:
+            self.testif(True, "ValueError", "Test passed.", "Test failed.")
+
+    def main(self)->None:
+        """Main method for calling all methods in part A."""
+        test_file = "test_file.txt"
+        write = "Appends string to end of file and returns number of characters in appended file."
+        with open(test_file, "w", encoding="utf-8") as wrt_file:
+            wrt_file.write(write)
+        print(self.ed_read(test_file, 4, 20))
+        print(self.ed_find(test_file, "end"))
+        print(self.ed_replace(test_file, "file", "start", 1))
+        print(self.ed_append(test_file, "finished"))
+
+        self.test_ed_find()
+        self.test_ed_replace()
+
+solution = TextEditor()
+solution.main()
