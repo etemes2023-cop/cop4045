@@ -130,7 +130,8 @@ class Island (object):
                         count+=1
         return count
 
-    def count_humans(self):
+    def count_humans(self)->int:
+        """Returns the count of all humans on island."""
         count = 0
         for x in range(self.grid_size):
             for y in range(self.grid_size):
@@ -255,20 +256,24 @@ class Predator(Animal):
                 self.moved=True
 
 class Human(Animal):
-    def __init__(self, island, x=0, y=0, s="H"):
+    def __init__(self, island: Island, x:int=0, y:int=0, s:str="H")->None:
+        """Human child class constructor that initializes the starve, breeding, and hunt clocks
+        for Humans."""
         super().__init__(island, x, y, s)
         self.starve_clock = self.starve_time
         self.breed_clock = self.breed_time
         self.hunt_clock = self.hunt_time
 
-    def clock_tick(self):
+    def clock_tick(self)->None:
+        """Reduces each of the clocks by 1 and kills off Humans that starve to death."""
         self.breed_clock -= 1
         self.starve_clock -= 1
         self.hunt_clock -= 1
         if self.starve_clock <= 0:
             self.island.remove(self)
 
-    def hunt(self):
+    def hunt(self)->None:
+        """Checks if it is time for Humans to hunt and if so, hunt nearby Predators."""
         if self.hunt_clock > 0:
             return
 
