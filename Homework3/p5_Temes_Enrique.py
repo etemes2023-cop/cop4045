@@ -1,24 +1,17 @@
-class NChooseK:
-    n_choose_k = {}
-
+class Pairs:
     def __init__(self):
         pass
 
-    def cnk_m(self, n, k):
-        if (n,k) in self.n_choose_k:
-            return self.n_choose_k[(n,k)]
+    acc=[]
+    def make_pairs(self, seq1, seq2, acc):
+        if not seq1 or not seq2:
+            return acc
         
-        if k == 0 or k == n:
-            self.n_choose_k[(n,k)] = 1
-            return 1
-        elif k > n or k < 0:
-            self.n_choose_k[(n,k)] = 0
-            return 0
-        else:
-            value = self.cnk_m(n-1, k-1) + self.cnk_m(n-1, k)
-            self.n_choose_k[(n,k)] = value
-
-        return value
+        x = seq1[0]
+        y = seq2[0]
+        pair = (x,y)
+        acc.append(pair)
+        return self.make_pairs(seq1[1:], seq2[1:], acc)
 
     def testif(self, b: bool, testname: str, msgOK: str="", msgFailed: str="") -> bool:
         """Function used for testing.
@@ -33,18 +26,14 @@ class NChooseK:
             print("Success: "+ testname + "; " + msgOK)
         else:
             print("Failed: "+ testname + "; " + msgFailed)
-        return b  
+        return b 
 
-    def run_cnk(self):
-       self.testif(self.cnk_m(5,2)==10, "Test 1", "Test passed.", "Test failed.")
-       self.testif(self.cnk_m(6,3)==20, "Test 2", "Test passed.", "Test failed.")
-       self.testif(self.cnk_m(5,0)==1, "Test 3", "Test passed.", "Test failed.")
-       self.testif(self.cnk_m(2,3)==0, "Test 4", "Test passed.", "Test failed.")
+    def test_make_pairs(self):
+        self.testif(self.make_pairs([1,2,3], ['a','b','c'], []) == [(1, 'a'), (2, 'b'), (3, 'c')], "Test 1", "Test passed.", "Test failed.")
+        self.testif(self.make_pairs([1,2,3], ['a','b'], []) == [(1, 'a'), (2, 'b')], "Test 2", "Test passed.", "Test failed.")
+        self.testif(self.make_pairs([1,2], ['a','b','c'], []) == [(1, 'a'), (2, 'b')], "Test 3", "Test passed.", "Test failed.")
+        self.testif(self.make_pairs([1,2,3], [], []) == [], "Test 4", "Test passed.", "Test failed.")
+        self.testif(self.make_pairs([], [], []) == [], "Test 5", "Test passed.", "Test failed.")
 
-
-n = int(input("Enter n: "))
-k = int(input("Enter k: "))
-value = NChooseK()
-result = value.cnk_m(n,k)
-print(result)
-value.run_cnk()
+solution = Pairs()
+solution.test_make_pairs()
