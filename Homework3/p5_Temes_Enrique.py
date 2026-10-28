@@ -1,101 +1,51 @@
-import turtle
-class Leaf:
-    def draw_leaf_straight(self, level, length):
-        position = turtle.position()
-        heading = turtle.heading()
-        if level == 1:
-            turtle.forward(length*0.4)
-            branch_position = turtle.position()
-            branch_heading = turtle.heading()
+class Conversion:
+    def __init__(self):
+        pass
 
-            turtle.left(45)
-            turtle.forward(length*0.5)
-            turtle.setposition(branch_position)
-            turtle.setheading(branch_heading)
+    def strB(self, n, base):
+        conversion = ""
+        if n < base:
+            if n >= 10:
+                return chr(n-10 + ord('A'))
+            return str(n)
+        else:
+            quotient = n // base
+            remainder = n % base
+            if remainder >= 10:
+                remainder = chr(remainder-10 + ord('A'))
+            else:
+                remainder = str(remainder)
 
-            turtle.right(45)
-            turtle.forward(length*0.5)
-            turtle.setposition(branch_position)
-            turtle.setheading(branch_heading)
+            conversion += self.strB(quotient, base)
+            conversion += remainder
+        return conversion
 
-            turtle.forward(length*0.5)
-            return
+    def testif(self, b: bool, testname: str, msgOK: str="", msgFailed: str="") -> bool:
+        """Function used for testing.
+        param b: boolean, normally a tested condition: true if test passed, false
+        otherwise
+        param testname: the test name
+        param msgOK: string to be printed if param b==True ( test condition true)
+        param msgFailed: string to be printed if param b==False
+        returns b
+        """
+        if b:
+            print("Success: "+ testname + "; " + msgOK)
+        else:
+            print("Failed: "+ testname + "; " + msgFailed)
+        return b  
 
-        turtle.forward(length*0.4)
-        branch_position = turtle.position()
-        branch_heading = turtle.heading()
-
-        turtle.left(45)
-        self.draw_leaf_straight(level-1, length*0.7)
-        turtle.setposition(branch_position)
-        turtle.setheading(branch_heading)
-
-        turtle.right(45)
-        self.draw_leaf_straight(level-1, length*0.7)
-        turtle.setposition(branch_position)
-        turtle.setheading(branch_heading)
-
-        turtle.forward(length*0.6)
-        turtle.setposition(position)
-        turtle.setheading(heading)
-
-    def draw_leaf_curved(self, level, length):
-        position = turtle.position()
-        heading = turtle.heading()
-        if level == 1:
-            for i in range(10):    
-                turtle.forward(length*0.04)
-                turtle.left(2)
-
-            branch_position = turtle.position()
-            branch_heading = turtle.heading()
-    
-            turtle.left(40)
-            turtle.forward(length*0.5)
-            turtle.setposition(branch_position)
-            turtle.setheading(branch_heading)
-    
-            turtle.right(40)
-            turtle.forward(length*0.5)
-            turtle.setposition(branch_position)
-            turtle.setheading(branch_heading)
-    
-            for i in range(10):    
-                turtle.forward(length*0.04)
-                turtle.left(2)
-            return
-        
-        for i in range(10):    
-            turtle.forward(length*0.04)
-            turtle.left(2)
-
-        branch_position = turtle.position()
-        branch_heading = turtle.heading()
-    
-        turtle.left(40)
-        self.draw_leaf_straight(level-1, length*0.7)
-        turtle.setposition(branch_position)
-        turtle.setheading(branch_heading)
-    
-        turtle.right(40)
-        self.draw_leaf_straight(level-1, length*0.7)
-        turtle.setposition(branch_position)
-        turtle.setheading(branch_heading)
-    
-        for i in range(10):    
-            turtle.forward(length*0.04)
-            turtle.left(2)
-
-        turtle.setposition(position)
-        turtle.setheading(heading)
-    
     def main(self):
-        turtle.up()
-        turtle.goto(0, -120)
-        turtle.setheading(90)
-        turtle.down()
-        #self.draw_leaf_straight(6, 120)
-        self.draw_leaf_curved(8, 120)
+        #print(self.strB(25, 2))
+        #print(self.strB(10, 2))
+        #print(self.strB(25, 26))
+        #print(self.strB(0, 10))
 
-solution = Leaf()
+        self.testif(self.strB(25, 2)=="11001", "Test 1", "Test passed.", "Test failed.")
+        self.testif(self.strB(10, 2)=="1010", "Test 2", "Test passed.", "Test failed.")
+        self.testif(self.strB(25, 26)=="P", "Test 3", "Test passed.", "Test failed.")
+        self.testif(self.strB(0, 10)=="0", "Test 4", "Test passed.", "Test failed.")
+
+
+solution = Conversion()
 solution.main()
