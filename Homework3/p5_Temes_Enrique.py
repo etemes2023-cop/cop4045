@@ -1,24 +1,24 @@
-class Conversion:
+class NChooseK:
+    n_choose_k = {}
+
     def __init__(self):
         pass
 
-    def strB(self, n, base):
-        conversion = ""
-        if n < base:
-            if n >= 10:
-                return chr(n-10 + ord('A'))
-            return str(n)
+    def cnk_m(self, n, k):
+        if (n,k) in self.n_choose_k:
+            return self.n_choose_k[(n,k)]
+        
+        if k == 0 or k == n:
+            self.n_choose_k[(n,k)] = 1
+            return 1
+        elif k > n or k < 0:
+            self.n_choose_k[(n,k)] = 0
+            return 0
         else:
-            quotient = n // base
-            remainder = n % base
-            if remainder >= 10:
-                remainder = chr(remainder-10 + ord('A'))
-            else:
-                remainder = str(remainder)
+            value = self.cnk_m(n-1, k-1) + self.cnk_m(n-1, k)
+            self.n_choose_k[(n,k)] = value
 
-            conversion += self.strB(quotient, base)
-            conversion += remainder
-        return conversion
+        return value
 
     def testif(self, b: bool, testname: str, msgOK: str="", msgFailed: str="") -> bool:
         """Function used for testing.
@@ -35,17 +35,16 @@ class Conversion:
             print("Failed: "+ testname + "; " + msgFailed)
         return b  
 
-    def main(self):
-        #print(self.strB(25, 2))
-        #print(self.strB(10, 2))
-        #print(self.strB(25, 26))
-        #print(self.strB(0, 10))
-
-        self.testif(self.strB(25, 2)=="11001", "Test 1", "Test passed.", "Test failed.")
-        self.testif(self.strB(10, 2)=="1010", "Test 2", "Test passed.", "Test failed.")
-        self.testif(self.strB(25, 26)=="P", "Test 3", "Test passed.", "Test failed.")
-        self.testif(self.strB(0, 10)=="0", "Test 4", "Test passed.", "Test failed.")
+    def run_cnk(self):
+       self.testif(self.cnk_m(5,2)==10, "Test 1", "Test passed.", "Test failed.")
+       self.testif(self.cnk_m(6,3)==20, "Test 2", "Test passed.", "Test failed.")
+       self.testif(self.cnk_m(5,0)==1, "Test 3", "Test passed.", "Test failed.")
+       self.testif(self.cnk_m(2,3)==0, "Test 4", "Test passed.", "Test failed.")
 
 
-solution = Conversion()
-solution.main()
+n = int(input("Enter n: "))
+k = int(input("Enter k: "))
+value = NChooseK()
+result = value.cnk_m(n,k)
+print(result)
+value.run_cnk()
