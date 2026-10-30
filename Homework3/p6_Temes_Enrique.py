@@ -79,13 +79,13 @@ inner.add(large_file)
 assert outer.size() == 85
 
 # At least 25 bytes: medium and large. At least 50 bytes: large only.
+print("Z23734170")
 print([file.name for file in find_large_files(outer, 25)])
 assert find_large_files(outer, 25) == [medium_file, large_file]
 assert find_large_files(outer, 50) == [large_file]
 
 # The path starts at the file and follows its parents up to the root.
 assert large_file.absolute_path() == [large_file, inner, middle, outer]
-print("Z23734170")
 print("Part F outer folder size:", outer.size())
 print("Part F files at least 25 bytes:", [file.name for file in find_large_files(outer, 25)])
 print("Part F files at least 50 bytes:", [file.name for file in find_large_files(outer, 50)])

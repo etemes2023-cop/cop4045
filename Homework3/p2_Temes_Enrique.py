@@ -1,4 +1,5 @@
 class ParkingPermit:
+    """Parent class that represents a general university parking permit."""
     def __init__(self, name: str, months: int, schedule: dict[str,int])-> None:
         """Parent class constructor for initializing name, months, and schedule."""
         self.name = name
@@ -18,6 +19,7 @@ class ParkingPermit:
         return f"{self.name} has had a parking permit for {self.months} months."
 
 class StudentPermit(ParkingPermit):
+    """Child class that represents a student parking permit."""
     def __init__(self, name: str, months: int, schedule: dict[str,int], vehicles: int)->None:
         """Child class StudentPermit constructor that calls parent constructor and initializes the int vehicles."""
         super().__init__(name, months, schedule)
@@ -30,13 +32,17 @@ class StudentPermit(ParkingPermit):
         else:
             return self.schedule["Student Permit"] * self.months
 
+    def __str__(self)->str:
+        """Child class method for showing how long a student has had a parking permit."""
+        return f"{self.name} has had a parking permit for {self.months} months."
+
     def __repr__(self)->str:
         """Overrides parent class __repr__ by adding how many vehicles student uses."""
-        super().__repr__()
-        return f"In addition, {self.name} uses {self.vehicles} vehicles."
+        return f"{super().__repr__()} In addition, {self.name} uses {self.vehicles} vehicles."
 
 class FacultyPermit(ParkingPermit):
-    def __init__(self, name: str, months: int, schedule: dict[str,int], access: bool)->None:
+    """Child class that represents faculty parking permits."""
+    def __init__(self   , name: str, months: int, schedule: dict[str,int], access: bool)->None:
         """Child class FacultyPermit constructor that calls parent constructor and initializes the bool access."""
         super().__init__(name, months, schedule)
         self.access = access
@@ -48,13 +54,16 @@ class FacultyPermit(ParkingPermit):
         else:
             return (self.schedule["Faculty Permit"] * self.months)
 
+    def __str__(self)->str:
+        """Child class method for showing how long a faculty member has had a parking permit."""
+        return f"{self.name} has had a parking permit for {self.months} months."
+
     def __repr__(self)->str:
         """Overrides parent class __repr by adding whether or not faculty has garage access."""
-        super().__repr__()
         if self.access:
-            return f"In addition, {self.name} has garage access."
+            return f"{ super().__repr__()} In addition, {self.name} has garage access."
         else:
-            return f"In addition, {self.name} does not have garage access."  
+            return f"{ super().__repr__()} In addition, {self.name} does not have garage access."  
 
 def main()->None:
     """Independent of any class. Creates child class objects before calling summarize_list to print 

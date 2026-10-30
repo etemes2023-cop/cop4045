@@ -1,6 +1,10 @@
 class NVector:
+    """NVector class use a vector of numbers for a variety of purposes such as determining its length,
+    getting vector items, setting vector item values, converting to a string, checking if other vectors are
+    instances, and performing vector/scalar addition, reflective addition, vector/scalar multiplication, and
+    reflective multiplication."""
     def __init__(self, *args: float | int | list[int | float])-> None:
-        """Constructor that initializes the length of vector."""
+        """Constructor that initializes NVector object and stores elements in new list."""
         if len(args) == 1:
             args_list = list(args[0])
         else:
@@ -67,23 +71,26 @@ class NVector:
 
     @classmethod
     def zeros(cls, n: int)-> NVector:
-        """Returns an NVector object with as many zeros equal to the value of parameter n."""
+        """Returns an NVector object with as many zeros equal to the value of parameter n. If n is negative, ValueError is raised."""
+        if n < 0:
+            raise ValueError
+        
         return cls([0]*n)
 
     def testif(self, b: bool, testname: str, msgOK: str="", msgFailed: str="") -> bool:
-            """Function used for testing.
-            param b: boolean, normally a tested condition: true if test passed, false
-            otherwise
-            param testname: the test name
-            param msgOK: string to be printed if param b==True ( test condition true)
-            param msgFailed: string to be printed if param b==False
-            returns b
-            """
-            if b:
-                print("Success: "+ testname + "; " + msgOK)
-            else:
-                print("Failed: "+ testname + "; " + msgFailed)
-            return b
+        """Function used for testing.
+        param b: boolean, normally a tested condition: true if test passed, false
+        otherwise
+        param testname: the test name
+        param msgOK: string to be printed if param b==True ( test condition true)
+        param msgFailed: string to be printed if param b==False
+        returns b
+        """
+        if b:
+             print("Success: "+ testname + "; " + msgOK)
+        else:
+            print("Failed: "+ testname + "; " + msgFailed)
+        return b
     
     def main(self)-> None:
         v = NVector(1, 2, 3, 4)

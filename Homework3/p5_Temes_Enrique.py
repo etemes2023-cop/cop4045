@@ -34,6 +34,8 @@ class Leaf:
             turtle.setheading(branch_heading)
 
             turtle.forward(length*0.5)
+            turtle.setposition(position)
+            turtle.setheading(heading)
             return
 
         turtle.forward(length*0.4)
@@ -89,12 +91,12 @@ class Leaf:
         branch_heading = turtle.heading()
     
         turtle.left(40)
-        self.draw_leaf_straight(level-1, length*0.7)
+        self.draw_leaf_curved(level-1, length*0.7)
         turtle.setposition(branch_position)
         turtle.setheading(branch_heading)
     
         turtle.right(40)
-        self.draw_leaf_straight(level-1, length*0.7)
+        self.draw_leaf_curved(level-1, length*0.7)
         turtle.setposition(branch_position)
         turtle.setheading(branch_heading)
     
@@ -106,21 +108,34 @@ class Leaf:
         turtle.setheading(heading)
     
     def main(self):
+        turtle.speed(0)
+        turtle.delay(0)
         turtle.up()
         turtle.goto(0, -120)
         turtle.setheading(90)
         turtle.down()
         self.draw_leaf_straight(6, 120)
-        self.draw_leaf_curved(8, 120)
+
+        turtle.reset()
+        turtle.goto(0, -120)
+        turtle.setheading(90)
+        turtle.down()
 
 solution = Leaf()
 solution.main()
+solution.draw_leaf_curved(6, 120)
 
 class Conversion:
     def __init__(self):
         pass
 
-    def strB(self, n, base):
+    def strB(self, n, base=10):
+        if not isinstance(n,int) or isinstance(n,bool) or n < 0:
+            raise ValueError
+
+        if not isinstance(base, int) or isinstance(base, bool) or not 2 <= base <= 26:
+            raise ValueError
+        
         conversion = ""
         if n < base:
             if n >= 10:
@@ -136,13 +151,14 @@ class Conversion:
 
             conversion += self.strB(quotient, base)
             conversion += remainder
+
         return conversion 
 
     def main(self):
-        self.testif(self.strB(25, 2)=="11001", "Test 1", "Test passed.", "Test failed.")
-        self.testif(self.strB(10, 2)=="1010", "Test 2", "Test passed.", "Test failed.")
-        self.testif(self.strB(25, 26)=="P", "Test 3", "Test passed.", "Test failed.")
-        self.testif(self.strB(0, 10)=="0", "Test 4", "Test passed.", "Test failed.")
+        testif(self.strB(25, 2)=="11001", "Test 1", "Test passed.", "Test failed.")
+        testif(self.strB(10, 2)=="1010", "Test 2", "Test passed.", "Test failed.")
+        testif(self.strB(25, 26)=="P", "Test 3", "Test passed.", "Test failed.")
+        testif(self.strB(0, 10)=="0", "Test 4", "Test passed.", "Test failed.")
 
 solution = Conversion()
 solution.main()
@@ -153,7 +169,7 @@ class NChooseK:
     def __init__(self):
         pass
 
-    def cnk_m(self, n, k):
+    def Cnk_m(self, n, k):
         if (n,k) in self.n_choose_k:
             return self.n_choose_k[(n,k)]
         
@@ -164,24 +180,24 @@ class NChooseK:
             self.n_choose_k[(n,k)] = 0
             return 0
         else:
-            value = self.cnk_m(n-1, k-1) + self.cnk_m(n-1, k)
+            value = self.Cnk_m(n-1, k-1) + self.Cnk_m(n-1, k)
             self.n_choose_k[(n,k)] = value
 
         return value
 
-    def run_cnk(self):
-       self.testif(self.cnk_m(5,2)==10, "Test 1", "Test passed.", "Test failed.")
-       self.testif(self.cnk_m(6,3)==20, "Test 2", "Test passed.", "Test failed.")
-       self.testif(self.cnk_m(5,0)==1, "Test 3", "Test passed.", "Test failed.")
-       self.testif(self.cnk_m(2,3)==0, "Test 4", "Test passed.", "Test failed.")
+    def run_Cnk(self):
+       testif(self.Cnk_m(5,2)==10, "Test 1", "Test passed.", "Test failed.")
+       testif(self.Cnk_m(6,3)==20, "Test 2", "Test passed.", "Test failed.")
+       testif(self.Cnk_m(5,0)==1, "Test 3", "Test passed.", "Test failed.")
+       testif(self.Cnk_m(2,3)==0, "Test 4", "Test passed.", "Test failed.")
 
 
 n = int(input("Enter n: "))
 k = int(input("Enter k: "))
 value = NChooseK()
-result = value.cnk_m(n,k)
+result = value.Cnk_m(n,k)
 print(result)
-value.run_cnk()
+value.run_Cnk()
 
 class Pairs:
     def __init__(self):
@@ -199,11 +215,11 @@ class Pairs:
         return self.make_pairs(seq1[1:], seq2[1:], acc)
 
     def test_make_pairs(self):
-        self.testif(self.make_pairs([1,2,3], ['a','b','c'], []) == [(1, 'a'), (2, 'b'), (3, 'c')], "Test 1", "Test passed.", "Test failed.")
-        self.testif(self.make_pairs([1,2,3], ['a','b'], []) == [(1, 'a'), (2, 'b')], "Test 2", "Test passed.", "Test failed.")
-        self.testif(self.make_pairs([1,2], ['a','b','c'], []) == [(1, 'a'), (2, 'b')], "Test 3", "Test passed.", "Test failed.")
-        self.testif(self.make_pairs([1,2,3], [], []) == [], "Test 4", "Test passed.", "Test failed.")
-        self.testif(self.make_pairs([], [], []) == [], "Test 5", "Test passed.", "Test failed.")
+        testif(self.make_pairs([1,2,3], ['a','b','c'], []) == [(1, 'a'), (2, 'b'), (3, 'c')], "Test 1", "Test passed.", "Test failed.")
+        testif(self.make_pairs([1,2,3], ['a','b'], []) == [(1, 'a'), (2, 'b')], "Test 2", "Test passed.", "Test failed.")
+        testif(self.make_pairs([1,2], ['a','b','c'], []) == [(1, 'a'), (2, 'b')], "Test 3", "Test passed.", "Test failed.")
+        testif(self.make_pairs([1,2,3], [], []) == [], "Test 4", "Test passed.", "Test failed.")
+        testif(self.make_pairs([], [], []) == [], "Test 5", "Test passed.", "Test failed.")
 
 solution = Pairs()
 print("Z23734170")

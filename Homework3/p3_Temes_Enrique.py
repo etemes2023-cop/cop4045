@@ -48,7 +48,7 @@ class Island (object):
                 count += 1
                 self.register(new_predator)
 
-        #Homework addition.
+        #Homework addition that adds while loop that continues until human_count unoccupied positions are found.
         count = 0
         while count < human_count:
             x = random.randint(0, self.grid_size-1)
@@ -131,7 +131,7 @@ class Island (object):
         return count
 
     def count_humans(self)->int:
-        """Returns the count of all humans on island."""
+        """Returns the count of all humans on the island."""
         count = 0
         for x in range(self.grid_size):
             for y in range(self.grid_size):
@@ -311,6 +311,10 @@ def main(predator_breed_time=6, predator_starve_time=3, initial_predators=10, pr
     # make an island
     isle = Island(size,initial_prey, initial_predators, initial_humans)
     print(isle)
+    print("Initial Prey: ", isle.count_prey())
+    print("Initial Predators: ", isle.count_predators())
+    print("Initial Humans: ", isle.count_humans())
+
 
     # event loop. 
     # For all the ticks, for every x,y location.
@@ -355,12 +359,16 @@ def main(predator_breed_time=6, predator_starve_time=3, initial_predators=10, pr
         
         # print out every 10th cycle, see what's going on
         if not i%10:
-            print(prey_count, predator_count)
+            print(prey_count, predator_count, human_count)
         # print the island, hold at the end of each cycle to get a look
         # print('*'*20)
-        print(isle)
         # ans = input("Return to continue")
     print(isle)
+    print("Final Prey: ", isle.count_prey())
+    print("Final Predators: ", isle.count_predators())
+    print("Final Humans: ", isle.count_humans())
+    print("Total Ticks: ", i+1)
+    
     plt.plot(predator_list, label="Predators")
     plt.plot(prey_list, label="Prey")
     plt.plot(human_list, label="Humans")

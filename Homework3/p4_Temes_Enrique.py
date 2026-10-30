@@ -2,7 +2,7 @@ class TextEditor:
     def __init__(self):
         pass
 
-    def ed_read(self, filename: list[str], from_:int=0, to:int=-1)->str:
+    def ed_read(self, filename: str, from_:int=0, to:int=-1)->str:
         """Returns portion of file content based on the value of the parameter to."""
         with open(file=filename, encoding="utf-8") as temp_file:
             content = temp_file.read()
@@ -15,7 +15,8 @@ class TextEditor:
                 return content[from_:to]
 
     def ed_find(self, filename: str, search_str: str)->list[int]:
-        """Returns a list of indexes where search_str begins in temp_file."""
+        """Returns a list of indexes where search_str begins in temp_file. If no occurences are found, 
+        return an empty list."""
         with open(file=filename, encoding="utf-8") as temp_file:
             content = temp_file.read()
             positions = []
@@ -25,7 +26,7 @@ class TextEditor:
                 position = content.find(search_str, position+1)
             return positions
 
-    def ed_replace(self, filename: str, search_str: str, replace_with, occurrence:int=-1)->int:
+    def ed_replace(self, filename: str, search_str: str, replace_with: str, occurrence:int=-1)->int:
         """Returns number of times search_str is replaced with replace_with."""
         with open(file=filename, encoding="utf-8") as temp_file:
             content = temp_file.read()
@@ -88,7 +89,7 @@ class TextEditor:
         try:
             self.ed_replace(test_file, "file", "start", -2)   
             self.testif(False, "ValueError", "Test passed.", "Test failed.")
-        except:
+        except ValueError:
             self.testif(True, "ValueError", "Test passed.", "Test failed.")
 
     def main(self)->None:
@@ -106,4 +107,5 @@ class TextEditor:
         self.test_ed_replace()
 
 solution = TextEditor()
+print("Z23734170")
 solution.main()

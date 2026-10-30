@@ -1,0 +1,1 @@
+Appstarts string to start of start and returns number of characters in appstarted start.
